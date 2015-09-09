@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.cnd.makeproject</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/make-project/1">
+            <name>esp8266_freertos_test2</name>
+            <c-extensions>c</c-extensions>
+            <cpp-extensions>cpp</cpp-extensions>
+            <header-extensions>h,hpp</header-extensions>
+            <sourceEncoding>UTF-8</sourceEncoding>
+            <make-dep-projects/>
+            <sourceRootList>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/cplusplus</sourceRootElem>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/mqtt</sourceRootElem>
+                <sourceRootElem>../../shared/org/eclipse/paho/mqtt/MQTTPacket</sourceRootElem>
+                <sourceRootElem>../../shared/org/eclipse/paho/mqtt/MQTTClient</sourceRootElem>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/rwlock</sourceRootElem>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/thread</sourceRootElem>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/wifi</sourceRootElem>
+                <sourceRootElem>../../shared/com/realtimelogic/json/esp_open_rtos</sourceRootElem>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/timer</sourceRootElem>
+                <sourceRootElem>../../shared/com/tholusi/esp-open-rtos/ip</sourceRootElem>
+            </sourceRootList>
+            <confList>
+                <confElem>
+                    <name>Debug</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>Release</name>
+                    <type>1</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
+        </data>
+    </configuration>
+</project>

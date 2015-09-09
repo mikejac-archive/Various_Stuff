@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="com" projectFiles="true">
+        <logicalFolder name="f2" displayName="realtimelogic" projectFiles="true">
+          <logicalFolder name="f1" displayName="json" projectFiles="true">
+            <logicalFolder name="esp_open_rtos"
+                           displayName="esp_open_rtos"
+                           projectFiles="true">
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/AllocatorIntf.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/AllocatorIntf.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/BaAtoi.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/BaAtoi.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/BufPrint.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/BufPrint.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JDecoder.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JDecoder.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JEncoder.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JEncoder.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JParser.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JParser.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JVal.c</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/JVal.h</itemPath>
+              <itemPath>../../shared/com/realtimelogic/json/esp_open_rtos/TargConfig.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="tholusi" projectFiles="true">
+          <logicalFolder name="f1" displayName="esp-open-rtos" projectFiles="true">
+            <logicalFolder name="cplusplus" displayName="cplusplus" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="date_time" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/date_time/system_time.c</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/date_time/system_time.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="ip" displayName="ip" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/ip/ipstack.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/ip/mdns.cpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/ip/mdns.hpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="mqtt" displayName="mqtt" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.cpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_client.cpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_config.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.cpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="thread" displayName="thread" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/thread/mutex.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/thread/queue.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/thread/task.hpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="timer" displayName="timer" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/timer/countdown.hpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="wifi" displayName="wifi" projectFiles="true">
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/wifi/wifi.cpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/wifi/wifi.hpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/wifi/wifi_smartlink.cpp</itemPath>
+              <itemPath>../../shared/com/tholusi/esp-open-rtos/wifi/wifi_smartweb.cpp</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="org" projectFiles="true">
+        <logicalFolder name="f2" displayName="bitbucket" projectFiles="true">
+          <logicalFolder name="f1" displayName="geekman" projectFiles="true">
+            <logicalFolder name="f1" displayName="tinysvcmdns" projectFiles="true">
+              <itemPath>../../shared/org/bitbucket/geekman/tinysvcmdns/mdns.c</itemPath>
+              <itemPath>../../shared/org/bitbucket/geekman/tinysvcmdns/mdns.h</itemPath>
+              <itemPath>../../shared/org/bitbucket/geekman/tinysvcmdns/mdnsd.c</itemPath>
+              <itemPath>../../shared/org/bitbucket/geekman/tinysvcmdns/mdnsd.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="eclipse" projectFiles="true">
+          <logicalFolder name="f1" displayName="paho" projectFiles="true">
+            <logicalFolder name="f1" displayName="mqtt" projectFiles="true">
+              <logicalFolder name="MQTTClient" displayName="MQTTClient" projectFiles="true">
+                <logicalFolder name="src" displayName="src" projectFiles="true">
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTClient/src/FP.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTClient/src/MQTTLogging.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <logicalFolder name="MQTTPacket" displayName="MQTTPacket" projectFiles="true">
+                <logicalFolder name="src" displayName="src" projectFiles="true">
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnect.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnectClient.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnectServer.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTDeserializePublish.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTFormat.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTFormat.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPacket.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPacket.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPublish.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSerializePublish.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribe.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribeClient.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribeServer.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribe.h</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribeClient.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribeServer.c</itemPath>
+                  <itemPath>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/StackTrace.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>main.cpp</itemPath>
+      <itemPath>task_mdns.cpp</itemPath>
+      <itemPath>task_mdns.hpp</itemPath>
+      <itemPath>task_mqtt.cpp</itemPath>
+      <itemPath>task_mqtt.hpp</itemPath>
+      <itemPath>task_pub.cpp</itemPath>
+      <itemPath>task_pub.hpp</itemPath>
+      <itemPath>wifi.hpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/cplusplus</Elem>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/mqtt</Elem>
+    <Elem>../../shared/org/eclipse/paho/mqtt/MQTTPacket</Elem>
+    <Elem>../../shared/org/eclipse/paho/mqtt/MQTTClient</Elem>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/rwlock</Elem>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/thread</Elem>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/wifi</Elem>
+    <Elem>../../shared/com/realtimelogic/json/esp_open_rtos</Elem>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/timer</Elem>
+    <Elem>../../shared/com/tholusi/esp-open-rtos/ip</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>GNU_ESP_Open_SDK|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+      </compileType>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/AllocatorIntf.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/AllocatorIntf.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BaAtoi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BaAtoi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BufPrint.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BufPrint.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JDecoder.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JDecoder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JEncoder.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JEncoder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JParser.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JParser.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JVal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JVal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/TargConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/date_time/system_time.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/date_time/system_time.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/ip/ipstack.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/ip/mdns.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/ip/mdns.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_client.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_config.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/thread/mutex.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/thread/queue.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/thread/task.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/timer/countdown.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi_smartlink.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi_smartweb.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdns.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdns.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdnsd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdnsd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTClient/src/FP.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTClient/src/MQTTLogging.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnectClient.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnectServer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTDeserializePublish.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTFormat.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTFormat.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPacket.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPacket.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPublish.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSerializePublish.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribeClient.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribeServer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribeClient.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribeServer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/StackTrace.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_mdns.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_mdns.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="task_mqtt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_mqtt.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="task_pub.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_pub.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wifi.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>GNU_ESP_Open_SDK_RTOS|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../../shared</pElem>
+            <pElem>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src</pElem>
+            <pElem>/opt/esp-open-rtos/include</pElem>
+            <pElem>/opt/esp-open-rtos/libc/xtensa-lx106-elf/include</pElem>
+            <pElem>/opt/esp-open-rtos/core/include</pElem>
+            <pElem>/opt/esp-open-rtos/FreeRTOS/Source/include</pElem>
+            <pElem>/opt/esp-open-rtos/FreeRTOS/Source/portable/esp8266</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/include</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include/ipv4</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include/ipv4/lwip</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include/lwip</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/include</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls/ssl</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls/crypto</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls/include</pElem>
+          </incDir>
+          <commandLine>-Wall -Werror -Wl,-EL -nostdlib -mlongcalls -mtext-section-literals -std=gnu99 -g -O2</commandLine>
+          <preprocessorList>
+            <Elem>WITH_SMARTWEB</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../shared</pElem>
+            <pElem>../../shared/org/eclipse/paho/mqtt/MQTTPacket/src</pElem>
+            <pElem>/opt/esp-open-rtos/include</pElem>
+            <pElem>/opt/esp-open-rtos/libc/xtensa-lx106-elf/include</pElem>
+            <pElem>/opt/esp-open-rtos/core/include</pElem>
+            <pElem>/opt/esp-open-rtos/FreeRTOS/Source/include</pElem>
+            <pElem>/opt/esp-open-rtos/FreeRTOS/Source/portable/esp8266</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/include</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include/ipv4</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include/ipv4/lwip</pElem>
+            <pElem>/opt/esp-open-rtos/lwip/lwip/src/include/lwip</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/include</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls/ssl</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls/crypto</pElem>
+            <pElem>/opt/esp-open-rtos/axtls/axtls/include</pElem>
+          </incDir>
+          <commandLine>-Wall -Wl,-EL -nostdlib -mlongcalls -mtext-section-literals -g -fno-exceptions -fno-rtti</commandLine>
+          <preprocessorList>
+            <Elem>WITH_SMARTWEB</Elem>
+          </preprocessorList>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/esp8266_freertos_test2</output>
+          <commandlineTool>xtensa-lx106-elf-gcc</commandlineTool>
+          <commandLine>-Wl,--no-check-sections -L${BUILD_DIR}/sdklib -nostdlib -fno-rtti -g -O2 -Wl,-EL -T${LD_SCRIPT1} -T${LD_SCRIPT2} -u ${ENTRY_SYMBOL} -Wl,-static -Wl,-Map=${MAP_FILE} -Wl,--start-group ${LIB_GROUP} -Wl,--end-group</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/AllocatorIntf.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/AllocatorIntf.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BaAtoi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BaAtoi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BufPrint.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/BufPrint.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JDecoder.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JDecoder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JEncoder.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JEncoder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JParser.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JParser.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JVal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/JVal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/realtimelogic/json/esp_open_rtos/TargConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/date_time/system_time.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/date_time/system_time.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/ip/ipstack.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_client.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_config.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/thread/mutex.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/thread/queue.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/thread/task.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/timer/countdown.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi_smartlink.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/com/tholusi/esp-open-rtos/wifi/wifi_smartweb.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdns.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdns.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdnsd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/bitbucket/geekman/tinysvcmdns/mdnsd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTClient/src/FP.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTClient/src/MQTTLogging.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnectClient.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTConnectServer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTDeserializePublish.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTFormat.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTFormat.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPacket.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPacket.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTPublish.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSerializePublish.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribeClient.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTSubscribeServer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribe.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribeClient.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/MQTTUnsubscribeServer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../shared/org/eclipse/paho/mqtt/MQTTPacket/src/StackTrace.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_mdns.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_mdns.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="task_mqtt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_mqtt.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="task_pub.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="task_pub.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wifi.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
