@@ -7,11 +7,16 @@
  * (at your option) any later version.
  */
 #include <limits.h>	/* for INT_MAX */
+
+#include <linux/types.h>
+
+#include <org/netfilter/libnml/netlink.h>
 #include <org/netfilter/libnml/libmnl.h>
 #include <string.h>
 #include <errno.h>
 #include <org/netfilter/libnml/internal.h>
 
+__u32 cc;
 /**
  * \defgroup attr Netlink attribute helpers
  *

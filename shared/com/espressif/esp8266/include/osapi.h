@@ -5,7 +5,10 @@
 #ifndef _OSAPI_H_
 #define _OSAPI_H_
 
+// Hmmmmmm ....
 //#include <string.h>
+// Hmmmmmm .... end
+
 #include "user_config.h"
 
 #define os_bzero ets_bzero

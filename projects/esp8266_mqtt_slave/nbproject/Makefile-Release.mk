@@ -14,14 +14,14 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=xtensa-lx106-elf-gcc
+CC=gcc
 CCC=xtensa-lx106-elf-g++
 CXX=xtensa-lx106-elf-g++
 FC=gfortran
-AS=xtensa-lx106-elf-as
+AS=as
 
 # Macros
-CND_PLATFORM=GNU_CPP_ESP8266-Linux-x86
+CND_PLATFORM=GNU-Linux-x86
 CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist

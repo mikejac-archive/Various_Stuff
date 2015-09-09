@@ -122,7 +122,9 @@ public:
 		/// Note: This will not work for an array or an object.
 	{
 		Dynamic::Var value = get(key);
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		return value.convert<T>();
+#endif
 	}
 
 	template<typename T>
@@ -138,7 +140,9 @@ public:
 			return Poco::Nullable<T>();
 
 		Dynamic::Var value = get(key);
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		return value.convert<T>();
+#endif
 	}
 
 	void getNames(std::vector<std::string>& names) const;
@@ -168,6 +172,7 @@ public:
 		/// and can be converted to the given type. Otherwise
 		/// def will be returned.
 	{
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		T value = def;
 		ValueMap::const_iterator it = _values.find(key);
 		if (it != _values.end() && ! it->second.isEmpty() )
@@ -182,6 +187,7 @@ public:
 			}
 		}
 		return value;
+#endif
 	}
 
 	std::size_t size() const;

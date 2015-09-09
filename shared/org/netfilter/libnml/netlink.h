@@ -1,8 +1,15 @@
 #ifndef __LINUX_NETLINK_H
 #define __LINUX_NETLINK_H
 
-#include <linux/socket.h> /* for sa_family_t */
-#include <linux/types.h>
+#if !defined(__GNUC__) || (__GNUC__ < 4)
+    #include <bits/sockaddr.h>
+    #include <linux/types.h>
+#else
+    #include <bits/sockaddr.h>
+    #include <linux/types.h>
+    //#include <linux/socket.h> /* for sa_family_t */
+#endif
+//#include <sys/types.h>
 
 #define NETLINK_ROUTE		0	/* Routing/device hook				*/
 #define NETLINK_UNUSED		1	/* Unused number				*/

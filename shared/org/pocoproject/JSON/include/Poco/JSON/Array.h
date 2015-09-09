@@ -97,7 +97,9 @@ public:
 		/// Note: This will not work for an array or an object.
 	{
 		Dynamic::Var value = get(index);
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		return value.convert<T>();
+#endif
 	}
 
 	SharedPtr<Object> getObject(unsigned int index) const;
@@ -136,6 +138,7 @@ public:
 		/// be converted to the given type, the default
 		/// value will be returned
 	{
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		T value = def;
 		if ( index < _values.size() )
 		{
@@ -149,6 +152,7 @@ public:
 			}
 		}
 		return value;
+#endif
 	}
 
 	void add(const Dynamic::Var& value);

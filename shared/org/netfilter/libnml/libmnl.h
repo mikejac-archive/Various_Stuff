@@ -14,12 +14,17 @@
 
 #include <unistd.h>
 #include <sys/socket.h> /* for sa_family_t */
-#include <linux/types.h>
+#include <sys/types.h>
+#if !defined(__GNUC__) || (__GNUC__ < 4)
+    #include <linux/types.h>
+    #include <org/netfilter/libnml/netlink.h>
+#endif
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
 #include <linux/netdevice.h>
 
 //#include <org/netfilter/libnml/netlink.h>
+//#include "netlink.h"
 
 #ifdef __cplusplus
 extern "C" {

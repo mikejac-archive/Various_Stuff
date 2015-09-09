@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU_ESP8266-Linux-x86/package
 CND_PACKAGE_NAME_Debug=esp8266mqttslave.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU_ESP8266-Linux-x86/package/esp8266mqttslave.tar
 # Release configuration
-CND_PLATFORM_Release=GNU_CPP_ESP8266-Linux-x86
-CND_ARTIFACT_DIR_Release=dist/Release/GNU_CPP_ESP8266-Linux-x86
+CND_PLATFORM_Release=GNU-Linux-x86
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
 CND_ARTIFACT_NAME_Release=esp8266_mqtt_slave
-CND_ARTIFACT_PATH_Release=dist/Release/GNU_CPP_ESP8266-Linux-x86/esp8266_mqtt_slave
-CND_PACKAGE_DIR_Release=dist/Release/GNU_CPP_ESP8266-Linux-x86/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/esp8266_mqtt_slave
+CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Release=esp8266mqttslave.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU_CPP_ESP8266-Linux-x86/package/esp8266mqttslave.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/esp8266mqttslave.tar
 #
 # include compiler specific variables
 #

@@ -80,6 +80,7 @@ public:
 		/// When the value can't be found or has an invalid type
 		/// the default value will be returned.
 	{
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		T result = def;
 		Dynamic::Var value = find(path);
 		if ( ! value.isEmpty() )
@@ -91,6 +92,7 @@ public:
 			catch(...) { }
 		}
 		return result;
+#endif
 	}
 
 	std::string findValue(const char* path, const char* def) const
