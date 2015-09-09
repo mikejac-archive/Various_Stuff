@@ -173,9 +173,6 @@ wifi_t::state_t wifi_t::do_wifi_smartlink()
 
     DTXT("wifi_t::do_wifi_smartlink(): begin\n");
     
-    //sdk_wifi_station_disconnect();
-    //sleep(100);
-    
     sdk_wifi_set_opmode(STATION_MODE);
     sdk_wifi_station_set_auto_connect(0);
 
@@ -184,16 +181,10 @@ wifi_t::state_t wifi_t::do_wifi_smartlink()
     
     sdk_wifi_station_set_config(&m_Config);
 
-    //sleep(100);
-    
     m_CurrentTag = TAG_NONE;
     m_SsidCnt    = SIG_BEGIN;
     m_PswdCnt    = SIG_BEGIN;
 
-    //smart_lock_flag = 0;
-    //smart_channel   = -1;
-    //smart_status    = SMART_CH_INIT;
-    
     // init the router info 
     SLIST_INIT(&m_RouterList);
   
