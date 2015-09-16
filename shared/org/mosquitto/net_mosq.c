@@ -87,6 +87,8 @@ Contributors:
 int tls_ex_index_mosq = -1;
 #endif
 
+#define DTXT(...)   //printf(__VA_ARGS__)
+
 void _mosquitto_net_init(void)
 {
 #ifdef WIN32
@@ -891,6 +893,8 @@ int _mosquitto_packet_read(struct mosquitto *mosq)
 	if(!mosq) return MOSQ_ERR_INVAL;
 	if(mosq->sock == INVALID_SOCKET) return MOSQ_ERR_NO_CONN;
 	if(mosq->state == mosq_cs_connect_pending){
+                DTXT("_mosquitto_packet_read(): 1;\n");
+
 		return MOSQ_ERR_SUCCESS;
 	}
 
@@ -1034,6 +1038,7 @@ int _mosquitto_packet_read(struct mosquitto *mosq)
 	rc = mqtt3_packet_handle(db, mosq);
 #else
 	rc = _mosquitto_packet_handle(mosq);
+        if(rc) DTXT("_mosquitto_packet_read(): 2; rc = %d\n", rc);
 #endif
 
 	/* Free data and reset values */

@@ -123,6 +123,13 @@ public:
      * @param value
      * @return 
      */
+    int bmixGetInt(const char* name, int& value);
+    /**
+     * 
+     * @param name
+     * @param value
+     * @return 
+     */
     int bmixGetLong(const char* name, int64_t& value);
     /**
      * 

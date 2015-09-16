@@ -260,28 +260,44 @@ wifi_t::state_t wifi_t::do_wifi_smartweb()
     
     return state;
 }
-/**
- * 
- * @param port
- * @return 
- */
-int wifi_t::smartweb_run(int port)
+wifi_t::state_t wifi_t::smartweb_start_server(int port)
 {
-    DTXT("wifi_t::smartweb_run(): begin\n");
+    DTXT("wifi_t::smartweb_start_server(): begin\n");
 
-    int sd = lwip_socket(AF_INET, SOCK_STREAM, 0);
+    m_Sc     = -1;
+    m_Sd     = -1;
     
-    if(sd < 0) {
-        DTXT("wifi_t::smartweb_run(): lwip_socket()\n");
-        return -1;
+    m_Buffer = (char*) malloc(BUFFER_SIZE);
+    
+    if(m_Buffer == 0) {
+        DTXT("wifi_t::smartweb_start_server(): m_Buffer == 0\n");
+        return wifi_smartweb_fail;
+    }
+    
+    m_Sd = lwip_socket(AF_INET, SOCK_STREAM, 0);
+    
+    if(m_Sd < 0) {
+        DTXT("wifi_t::smartweb_start_server(): lwip_socket()\n");
+        free(m_Buffer);
+        return wifi_smartweb_fail;
     }    
     
-    char* buffer = (char*) malloc(BUFFER_SIZE);
+    int flags = lwip_fcntl(m_Sd, F_GETFL, 0);
     
-    if(buffer == 0) {
-        DTXT("wifi_t::smartweb_run(): buffer == 0\n");
-        close(sd);
-        return -1;
+    if(flags < 0) {
+    	DTXT("wifi_t::smartweb_start_server(): lwip_fcntl() F_GETFL\n");
+        free(m_Buffer);
+        lwip_close(m_Sd);
+    	return wifi_smartweb_fail;
+    }
+    
+    flags |= O_NONBLOCK;
+    
+    if(lwip_fcntl(m_Sd, F_SETFL, flags) < 0) {
+    	DTXT("wifi_t::smartweb_start_server(): lwip_fcntl() F_SETFL\n");
+        free(m_Buffer);
+        lwip_close(m_Sd);
+    	return wifi_smartweb_fail;
     }
     
     // bind to an address
@@ -291,41 +307,71 @@ int wifi_t::smartweb_run(int port)
     serveraddr.sin_port        = htons(port);
     serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
     
-    if(lwip_bind(sd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) {
-    	DTXT("wifi_t::smartweb_run(): lwip_bind()\n");
-        free(buffer);
-        close(sd);
-    	return -1;
+    if(lwip_bind(m_Sd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) {
+    	DTXT("wifi_t::smartweb_start_server(): lwip_bind()\n");
+        free(m_Buffer);
+        lwip_close(m_Sd);
+    	return wifi_smartweb_fail;
     }
     
-    if(lwip_listen(sd, BACKLOG) < 0) {
-    	DTXT("wifi_t::smartweb_run(): lwip_listen()\n");
-        free(buffer);
-        close(sd);
-    	return -1;
+    if(lwip_listen(m_Sd, BACKLOG) < 0) {
+    	DTXT("wifi_t::smartweb_start_server(): lwip_listen()\n");
+        free(m_Buffer);
+        lwip_close(m_Sd);
+    	return wifi_smartweb_fail;
     }
     
-    bool run = true;
+    DTXT("wifi_t::smartweb_start_server(): end\n");
+    
+    return wifi_smartweb_in_progress;
+}
 
-    while(run) {
+
+wifi_t::state_t wifi_t::smartweb_run_server()
+{
+    state_t state = wifi_smartweb_in_progress;
+    
+    DTXT("wifi_t::smartweb_run_server(): begin\n");
+
+    fd_set readset;
+
+    FD_ZERO(&readset); 
+    FD_SET(m_Sd, &readset);
+    
+    int maxfd = m_Sd;
+
+    if(m_Sc >= 0) {
+        FD_SET(m_Sc, &readset);
+        maxfd = max(maxfd, m_Sc);
+    }
+
+    struct timeval timeout;
+    timeout.tv_sec  = 1;
+    timeout.tv_usec = 0;
+    
+    lwip_select(maxfd + 1, &readset, NULL, NULL, &timeout);
+
+    // a new connection?
+    if(FD_ISSET(m_Sd, &readset)) {
+        DTXT("wifi_t::smartweb_run_server(): FD_ISSET(m_Sd, &readset)\n");
+        
+        struct sockaddr serveraddr;
+        memset(&serveraddr, 0, sizeof(serveraddr));
+        
         socklen_t b = sizeof(serveraddr);
-        int c;
-
-        DTXT("wifi_t::smartweb_run(): lwip_accept() start\n");
-
-        if((c = lwip_accept(sd, (struct sockaddr *)&serveraddr, &b)) < 0) {
-            DTXT("wifi_t::smartweb_run(): lwip_accept()\n");
-            free(buffer);
-            close(sd);
-            return -1;
+        
+        if((m_Sc = lwip_accept(m_Sd, &serveraddr, &b)) < 0) {
+            DTXT("wifi_t::smartweb_run_server(): lwip_accept()\n");
+            state = wifi_smartweb_fail;
         }
+    }
 
-        DTXT("wifi_t::smartweb_run(): lwip_accept() done\n");
-
-        ssize_t n = recv(c, buffer, BUFFER_SIZE, 0);
-
-        DTXT("wifi_t::smartweb_run(): n = %d\n", n);
-
+    // existing client connection
+    if(m_Sc >= 0 && FD_ISSET(m_Sc, &readset)) {
+        DTXT("wifi_t::smartweb_run_server(): m_Sc >= 0 && FD_ISSET(m_Sc, &readset)\n");
+        
+        ssize_t n = lwip_recv(m_Sc, m_Buffer, BUFFER_SIZE, 0);
+        
         if(n < 0) {
 
         }
@@ -333,204 +379,25 @@ int wifi_t::smartweb_run(int port)
 
         }
         else {
-            //DTXT("[%s]\n\n\n\n", buffer);
-
-            int   get_detect_     = 0;
-            int   post_detect_    = 0;
-            
-            char* content        = NULL;
-            char* http_version   = NULL;
-            int   content_length = 0;
-            
-            if(smartweb_token_begin(buffer, n) == 0) {
-                int   len   = 0;
-                int   ret   = -1;
-                char* token = NULL;
-
-                do {
-                    ret = smartweb_token_next(&token, len);
-                    
-                    DTXT("token [%s] len %d\n", token, len);
-
-                    /*if(get_detect_ == 0) {
-                        if(len == 3) {
-                            if(strcmp(token, "GET") == 0) {
-                                ++get_detect_;
-                            }
-                        }
-                    }
-                    
-                    if(get_detect_ == 1) {
-                        if(len == 1) {
-                            if(token[0] == '/') {
-                                //++get_detect_;
-                            }
-                        }
-                    }
-                    
-                    if(get_detect_ == 2) {
-                        if(len == 8) {
-                            http_version = token;
-                            ++get_detect_;
-                        }
-                    }
-                    
-                    if(post_detect_ == 0) {
-                        if(len == 4) {
-                            if(strcmp(token, "POST") == 0) {
-                                ++post_detect_;
-                            }
-                        }
-                    }
-                    
-                    if(post_detect_ == 1) {
-                        if(len == 8) {
-                            if(strcmp(token, "/set.exe") == 0) {
-                                ++post_detect_;
-                            }
-                        }
-                    }
-                    
-                    if(post_detect_ == 2) {
-                        if(len == 15) {
-                            if(strcmp(token, "Content-Length:") == 0) {
-                                ++post_detect_;
-                            }
-                        }
-                    }
-                    
-                    if(post_detect_ == 3) {
-                        //content_length = atoi(token);
-                        //++post_detect_;
-                    }*/
-
-                    /*if((get_detect_ == 0) && (len == 3) && (strcmp(token, "GET") == 0)) {
-                        ++get_detect_;
-                    }
-                    else if((get_detect_ == 1) && (len == 1) && (token[0] == '/')) {
-                        //++get_detect_;
-                    }
-                    else if((get_detect_ == 2) && (len == 8)) {
-                        http_version = token;
-                        ++get_detect_;
-                    }
-                    else if((post_detect_ == 0) && (len == 4) && (strcmp(token, "POST") == 0)) {
-                        ++post_detect_;
-                    }
-                    else if((post_detect_ == 1) && (len == 8) && (strcmp(token, "/set.exe") == 0)) {
-                        ++post_detect_;
-                    }
-                    else if((post_detect_ == 2) && (len == 15) && (strcmp(token, "Content-Length:")) == 0) {
-                        ++post_detect_;
-                    }
-                    else if(post_detect_ == 3) {
-                        //content_length = atoi(token);
-                        //++post_detect;
-                    }*/
-                    
-                    //DTXT("token [%s] len %d\n", token, len);
-                } while(ret != -1 && get_detect_ != 3);
-                
-                content = token;
-            }
-
-            if(get_detect_ == 3) {
-                DTXT("wifi_t::smartweb_run(): http_version = [%s]\n", http_version);
-
-                strcpy(buffer, HEADER200);
-                strcat(buffer, HEADER_TYPE);
-
-                sprintf(buffer + strlen(buffer), HEADER_LEN, sizeof(RESPONSE_BEGIN) + sizeof(RESPONSE_FORM) + sizeof(RESPONSE_END));
-
-                lwip_send(c, buffer,         strlen(buffer),         0);
-                lwip_send(c, RESPONSE_BEGIN, sizeof(RESPONSE_BEGIN), 0);
-                lwip_send(c, RESPONSE_FORM,  sizeof(RESPONSE_FORM),  0);
-                lwip_send(c, RESPONSE_END,   sizeof(RESPONSE_END),   0);
-            }
-            else if(post_detect_ == 4) {
-                content += 2;       // get to the payload
-                
-                DTXT("wifi_t::smartweb_run(): content_length = %d\n", content_length);
-                
-                char ssid[64];
-                char pswd[32];
-                
-                char* p = content;
-                
-                while(p - content < content_length) {
-                    if(strncmp(p, "ssid", 4) == 0) {
-                        p += 4;
-                        
-                        if(*p == '=') {
-                            ++p;
-                            
-                            for(int i = 0; p - content < content_length; ++i, ++p) {
-                                if(*p == '&') {
-                                    ssid[i] = '\0';
-                                    break;
-                                }
-                                
-                                ssid[i] = *p;
-                            }
-                        }
-                    }
-                    else if(strncmp(p, "key", 3) == 0) {
-                        p += 3;
-                        
-                        if(*p == '=') {
-                            ++p;
-                            
-                            for(int i = 0; p - content < content_length; ++i, ++p) {
-                                if(*p == '&') {
-                                    pswd[i] = '\0';
-                                    break;
-                                }
-                                
-                                pswd[i] = *p;
-                            }
-                        }
-                    }
-                    else {
-                        ++p;
-                    }
-                }
-                
-                DTXT("wifi_t::smartweb_run(): ssid = [%s], pswd = [%s]\n", ssid, pswd);
-                
-                strcpy(buffer, HEADER200);
-                strcat(buffer, HEADER_TYPE);
-
-                sprintf(buffer + strlen(buffer), HEADER_LEN, sizeof(RESPONSE_BEGIN) + sizeof(RESPONSE_DONE) + sizeof(RESPONSE_END));
-
-                lwip_send(c, buffer,         strlen(buffer),         0);
-                lwip_send(c, RESPONSE_BEGIN, sizeof(RESPONSE_BEGIN), 0);
-                lwip_send(c, RESPONSE_DONE,  sizeof(RESPONSE_DONE),  0);
-                lwip_send(c, RESPONSE_END,   sizeof(RESPONSE_END),   0);
-                
-                run = false;
-            }
-            else {
-                strcpy(buffer, HEADER404);
-                strcat(buffer, HEADER_TYPE);
-
-                sprintf(buffer + strlen(buffer), HEADER_LEN, 0);
-
-                DTXT("%s", buffer);
-
-                lwip_send(c, buffer, strlen(buffer), 0);
-            }
+            DTXT("[%s]\n", m_Buffer);
         }
+        
+        lwip_close(m_Sc);
+        m_Sc = -1;
+    }    
+    
+    DTXT("wifi_t::smartweb_run_server(): end\n");
+    
+    return state;
+}
 
-        lwip_close(c);
-    }
+wifi_t::state_t wifi_t::smartweb_stop_server()
+{
+    lwip_close(m_Sd);
     
-    lwip_close(sd);
+    free(m_Buffer);
     
-    free(buffer);
-    
-    DTXT("wifi_t::smartweb_run(): end\n");
-    
-    return 0;
+    return wifi_smartweb_done;
 }
 
 /*static char* m_P;
@@ -561,7 +428,7 @@ int wifi_t::smartweb_token_begin(char* buffer, int len)
  */
 int wifi_t::smartweb_token_next(char** token, int& len)
 {
-    while(m_I < m_N) {
+    /*while(m_I < m_N) {
         if(*m_P == ' ' || *m_P == '\r') {
             int ret = *m_P;
             
@@ -583,7 +450,7 @@ int wifi_t::smartweb_token_next(char** token, int& len)
 
         ++m_P;
         ++m_I;
-    }
+    }*/
     
     return -1;
 }

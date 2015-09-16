@@ -162,6 +162,10 @@ void wifi_t::task()
 {
     DTXT("wifi_t::task(): start; MAC = %s\n", m_Mac);
     
+#if defined(WITH_SMARTWEB)
+    //bool smartweb_
+#endif
+    
     while(true) {
         switch(m_State) {
             case none:
@@ -212,10 +216,19 @@ void wifi_t::task()
                 
 #if defined(WITH_SMARTWEB)
             case wifi_smartweb:
-                m_State = do_wifi_smartweb();
+                //m_State = do_wifi_smartweb();
+                break;
+
+            case wifi_smartweb_in_progress:
+                m_State = smartweb_run_server();
                 break;
                 
             case wifi_smartweb_done:
+                break;
+                
+            case wifi_smartweb_fail:
+                DTXT("wifi_t::task(): wifi_smartweb_fail\n");
+                m_State = ready;
                 break;
 #endif
                 
@@ -237,9 +250,12 @@ void wifi_t::task()
 
             case ready:
                 DTXT("wifi_t::task(): ready\n");
-                smartweb_run(80);
+#if defined(WITH_SMARTWEB)
+                m_State = smartweb_start_server(80);
+#else
                 sleep(60000);
                 m_State = do_wifi_check();
+#endif
                 break;
                 
             case dummy:

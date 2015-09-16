@@ -29,8 +29,7 @@
 #ifndef ESP_OPEN_RTOS_MQTT_CLIENT_HPP
 #define	ESP_OPEN_RTOS_MQTT_CLIENT_HPP
 
-#define MQTT_WITH_LWT   
-#define MQTT_WITH_USERNAME_PASSWORD
+// #define MQTT_WITH_USERNAME_PASSWORD
 
 #include <org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h>
 #include <com/tholusi/esp-open-rtos/ip/ipstack.hpp>
@@ -41,6 +40,11 @@
 #include <com/tholusi/esp-open-rtos/thread/queue.hpp>
 #include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
 #include <stdlib.h>
+#include <assert.h>
+
+#define DTXT(...)       printf(__VA_ARGS__)
+
+//void loghexdump(const void *pAddressIn, long lSize);
 
 namespace esp_open_rtos {
 namespace mqtt {
@@ -119,7 +123,14 @@ public:
     int maxMessageSize()
     {
         return MAX_PAYLOAD_SIZE;
-        //return MAX_PACKET_SIZE - MAX_TOPIC_SIZE - 1;
+    }
+    /**
+     * 
+     * @return 
+     */
+    inline bool isConnected()
+    {
+        return (m_State == ready) ? true : false;
     }
     /**
      * 
@@ -225,16 +236,20 @@ private:
     {}
     /**
      * 
-     * @param md
+     * @param topicName
+     * @param message
      */
-    virtual void on_message(MQTT::MessageData& md)
+    //virtual void on_message(MQTTString& topicName, MQTT::Message& message)
+    virtual void on_message(void* data)
     {}
     /**
      * 
-     * @param md
+     * @param topicName
+     * @param message
      * @param userptr
      */
-    static void _on_message(MQTT::MessageData& md, const void* userptr);
+    static void _on_message(void* data, const void* userptr);
+    //static void _on_message(MQTTString& topicName, MQTT::Message& message, const void* userptr);
     /**
      * 
      * @return 
@@ -306,13 +321,27 @@ public:
      * @param ms
      * @return 
      */
-    inline const MQTT::MessageData* receive(unsigned long ms = 0) 
+    inline int receive(MQTTString& topicName, MQTT::Message& msg, unsigned long ms = 0) 
     {
         if(m_Mqtt_queue.receive(m_Buffer, ms) == 0) {
-            return (const MQTT::MessageData*) m_Buffer;
+            //loghexdump(m_Buffer, 200);
+            
+            topicName = MQTTString_initializer;
+            
+            MQTTDeserialize_publish((unsigned char*)&msg.dup, 
+                                    (int*)&msg.qos, 
+                                    (unsigned char*)&msg.retained, 
+                                    (unsigned short*)&msg.id, 
+                                    &topicName,
+                                    (unsigned char**)&msg.payload, 
+                                    (int*)&msg.payloadlen, 
+                                    (unsigned char*)m_Buffer, 
+                                    MAX_PACKET_SIZE);
+            
+            return 0;
         }
         else {
-            return 0;
+            return -1;
         }
     }
     /**
@@ -352,6 +381,11 @@ class mqtt_client_queue_t: public mqtt_client_t
 public:
     /**
      * 
+     */
+    mqtt_client_queue_t()
+    {}
+    /**
+     * 
      * @param mqtt_queue
      * @param wifi
      * @param broker
@@ -371,10 +405,15 @@ private:
      * 
      * @param md
      */
-    void on_message(MQTT::MessageData& md)
+    void on_message(void* data)
     {
+        //DTXT("mqtt_client_queue_t::(): begin\n");
+        //loghexdump(data, 200);
+        
         // send the message to other task so that we can concentrate on doing MQTT communication
-        m_Mqtt_queue.post(&md);
+        assert(m_Mqtt_queue.post(data) == 0);
+        
+        //DTXT("mqtt_client_queue_t::(): end\n");
     }
     
     mqtt_payload_recv_t::mqtt_queue_t m_Mqtt_queue;
@@ -382,7 +421,6 @@ private:
 
 } // namespace mqtt {
 } // namespace esp_open_rtos {
-
 
 #endif	/* ESP_OPEN_RTOS_MQTT_CLIENT_HPP */
 

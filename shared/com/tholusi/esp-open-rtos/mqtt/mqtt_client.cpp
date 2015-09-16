@@ -190,11 +190,9 @@ int mqtt_client_t::setLwt(  const char*    will_topic,
     
     strncpy(m_LwtTopic,   will_topic,   MAX_TOPIC_SIZE - 1);
     strncpy(m_LwtMessage, will_message, MAX_PAYLOAD_SIZE - 1);
-    //strncpy(m_LwtMessage, will_message, MAX_PACKET_SIZE - MAX_TOPIC_SIZE - 1);
     
-    m_LwtTopic[MAX_TOPIC_SIZE - 1]                     = '\0';
+    m_LwtTopic[MAX_TOPIC_SIZE - 1]     = '\0';
     m_LwtMessage[MAX_PAYLOAD_SIZE - 1] = '\0';
-    //m_LwtMessage[MAX_PACKET_SIZE - MAX_TOPIC_SIZE - 1] = '\0';
     
     m_LwtQos      = will_qos;
     m_LwtRetained = will_retain;
@@ -412,17 +410,15 @@ mqtt_client_t::state_t mqtt_client_t::do_mqtt_connect()
 }
 /**
  * 
- * @param md
+ * @param topicName
+ * @param message
  * @param userptr
  */
-void mqtt_client_t::_on_message(MQTT::MessageData& md, const void * userptr)
+void mqtt_client_t::_on_message(void* data, const void* userptr)
 {
-    if(userptr != 0) {
-        ((mqtt_client_t*)(userptr))->on_message(md);
-    }
-    else {
-        
-    }
+    assert(userptr != 0);
+    
+    ((mqtt_client_t*)(userptr))->on_message(data);
 }
 /**
  * 

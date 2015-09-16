@@ -46,6 +46,8 @@ typedef int ssize_t;
 
 #include "config.h"
 
+#define DTXT(...)   //printf(__VA_ARGS__)
+
 #if !defined(WIN32) && !defined(__SYMBIAN32__)
 #define HAVE_PSELECT
 #endif
@@ -836,6 +838,7 @@ int mosquitto_loop(struct mosquitto *mosq, int timeout, int max_packets)
 	if(!mosq || max_packets < 1) return MOSQ_ERR_INVAL;
 #ifndef WIN32
 	if(mosq->sock >= FD_SETSIZE || mosq->sockpairR >= FD_SETSIZE){
+                DTXT("mosquitto_loop(): 1\n");
 		return MOSQ_ERR_INVAL;
 	}
 #endif
@@ -922,6 +925,7 @@ int mosquitto_loop(struct mosquitto *mosq, int timeout, int max_packets)
 		if(errno == EINTR){
 			return MOSQ_ERR_SUCCESS;
 		}else{
+                        DTXT("mosquitto_loop(): 2\n");
 			return MOSQ_ERR_ERRNO;
 		}
 	}else{
@@ -937,6 +941,7 @@ int mosquitto_loop(struct mosquitto *mosq, int timeout, int max_packets)
 					do{
 						rc = mosquitto_loop_read(mosq, max_packets);
 						if(rc || mosq->sock == INVALID_SOCKET){
+                                                        DTXT("mosquitto_loop(): 3\n");
 							return rc;
 						}
 					}while(SSL_DATA_PENDING(mosq));
@@ -964,6 +969,7 @@ int mosquitto_loop(struct mosquitto *mosq, int timeout, int max_packets)
 				{
 					rc = mosquitto_loop_write(mosq, max_packets);
 					if(rc || mosq->sock == INVALID_SOCKET){
+                                                DTXT("mosquitto_loop(): 4\n");
 						return rc;
 					}
 				}
@@ -1147,6 +1153,7 @@ int mosquitto_loop_read(struct mosquitto *mosq, int max_packets)
 			rc = _mosquitto_packet_read(mosq);
 		}
 		if(rc || errno == EAGAIN || errno == COMPAT_EWOULDBLOCK){
+                        DTXT("mosquitto_loop_read(): 1; rc = %d\n", rc);
 			return _mosquitto_loop_rc_handle(mosq, rc);
 		}
 	}

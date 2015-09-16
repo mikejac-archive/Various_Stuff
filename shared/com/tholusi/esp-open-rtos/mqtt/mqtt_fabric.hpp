@@ -91,10 +91,10 @@ public:
     }
     /**
      * 
-     * @param md
+     * @param topicName
      * @return 
      */
-    int fabricTokenBegin(const MQTT::MessageData* md);
+    int fabricTokenBegin(const MQTTString* topicName);
     /**
      * 
      * @param subtopic
@@ -118,7 +118,7 @@ protected:
     char                m_TaskId[TASK_ID_SIZE];
     
 private:
-    MQTT::MessageData*  m_Md;
+    MQTTString*         m_TopicName;
     char*               m_P;
     char*               m_Pp;
     int                 m_Words;

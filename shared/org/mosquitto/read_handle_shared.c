@@ -31,6 +31,8 @@ Contributors:
 #include <mosquitto_broker.h>
 #endif
 
+#define DTXT(...)   //printf(__VA_ARGS__)
+
 int _mosquitto_handle_pingreq(struct mosquitto *mosq)
 {
 	assert(mosq);
@@ -105,7 +107,8 @@ int _mosquitto_handle_pubrec(struct mosquitto *mosq)
 	rc = mqtt3_db_message_update(mosq, mid, mosq_md_out, mosq_ms_wait_for_pubcomp);
 #else
 	_mosquitto_log_printf(mosq, MOSQ_LOG_DEBUG, "Client %s received PUBREC (Mid: %d)", mosq->id, mid);
-
+        DTXT("_mosquitto_handle_pubrec(): client %s received PUBREC (mid = %d)\n", mosq->id, mid);
+        
 	rc = _mosquitto_message_out_update(mosq, mid, mosq_ms_wait_for_pubcomp);
 #endif
 	if(rc) return rc;

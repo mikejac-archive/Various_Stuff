@@ -352,6 +352,33 @@ int bluemix_t::bmixGetInt(const char* name, int32_t& value)
  * @param value
  * @return 
  */
+int bluemix_t::bmixGetInt(const char* name, int& value)
+{
+    JVal* jv_dd = bmixFind(name);
+    
+    if(jv_dd != 0 && jv_dd->getType() == JVType_Int) {
+        value = jv_dd->getInt(m_Err);
+        
+        // check for errors
+        if(m_Err->isError()) {        
+            DTXT("bluemix_t::bmixGetInt(): JSON decoder error; %s\n", m_Err->msg);
+            return -2;
+        }
+        else {
+            return 0;
+        }
+    }
+    else {
+        // not found
+        return -1;
+    }
+}
+/**
+ * 
+ * @param name
+ * @param value
+ * @return 
+ */
 int bluemix_t::bmixGetLong(const char* name, int64_t& value)
 {
     JVal* jv_dd = bmixFind(name);

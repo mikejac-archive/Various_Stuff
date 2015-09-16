@@ -25,6 +25,8 @@ Contributors:
 #include <send_mosq.h>
 #include <time_mosq.h>
 
+#define DTXT(...)   //printf(__VA_ARGS__)
+
 void _mosquitto_message_cleanup(struct mosquitto_message_all **message)
 {
 	struct mosquitto_message_all *msg;
@@ -273,6 +275,7 @@ int _mosquitto_message_remove(struct mosquitto *mosq, uint16_t mid, enum mosquit
 			return MOSQ_ERR_SUCCESS;
 		}else{
 			pthread_mutex_unlock(&mosq->out_message_mutex);
+                        DTXT("_mosquitto_message_remove(): 1\n");
 			return MOSQ_ERR_NOT_FOUND;
 		}
 	}else{
@@ -303,6 +306,7 @@ int _mosquitto_message_remove(struct mosquitto *mosq, uint16_t mid, enum mosquit
 		if(found){
 			return MOSQ_ERR_SUCCESS;
 		}else{
+                        DTXT("_mosquitto_message_remove(): 2\n");
 			return MOSQ_ERR_NOT_FOUND;
 		}
 	}
@@ -385,6 +389,7 @@ int _mosquitto_message_out_update(struct mosquitto *mosq, uint16_t mid, enum mos
 		message = message->next;
 	}
 	pthread_mutex_unlock(&mosq->out_message_mutex);
+        DTXT("_mosquitto_message_out_update(): mid = %u\n", mid);
 	return MOSQ_ERR_NOT_FOUND;
 }
 

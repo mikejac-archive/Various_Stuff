@@ -62,13 +62,12 @@ int esp_start_system_time()
     
     TIMER(0).CTRL = VAL2FIELD(TIMER_CTRL_CLKDIV, TIMER_CLKDIV_256) | TIMER_CTRL_RELOAD;
     TIMER(0).LOAD = 0x200000;
-
+    
     DPORT.INT_ENABLE |= DPORT_INT_ENABLE_TIMER0;
     _xt_isr_attach(INUM_TIMER_FRC1, frc1_interrupt_handler);
     _xt_isr_unmask(1<<INUM_TIMER_FRC1);
 
     TIMER(0).CTRL |= TIMER_CTRL_RUN;
-    
     
     
     

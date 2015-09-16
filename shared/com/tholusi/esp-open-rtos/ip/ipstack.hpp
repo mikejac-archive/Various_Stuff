@@ -66,10 +66,10 @@ public:
         struct addrinfo *  result = NULL;
         struct addrinfo    hints  = {0, AF_UNSPEC, SOCK_STREAM, IPPROTO_TCP, 0, NULL, NULL, NULL};
 
-        DTXT("ipstack_t::connect(): begin\n");
+        //DTXT("ipstack_t::connect(): begin\n");
         
         if((rc = lwip_getaddrinfo(hostname, NULL, &hints, &result)) == 0) {
-            DTXT("ipstack_t::connect(): lwip_getaddrinfo() == 0\n");
+            //DTXT("ipstack_t::connect(): lwip_getaddrinfo() == 0\n");
 
             struct addrinfo * res = result;
 
@@ -84,7 +84,7 @@ public:
             }
 
             if(result->ai_family == AF_INET) {
-                DTXT("ipstack_t::connect(): result->ai_family == AF_INET\n");
+                //DTXT("ipstack_t::connect(): result->ai_family == AF_INET\n");
                 
                 address.sin_port   = htons(port);
                 address.sin_family = AF_INET;
@@ -97,28 +97,28 @@ public:
             lwip_freeaddrinfo(result);
         }
         else {
-            DTXT("ipstack_t::connect(): lwip_getaddrinfo() != 0\n");
+            //DTXT("ipstack_t::connect(): lwip_getaddrinfo() != 0\n");
         }
         
         if(rc == 0) {
             mysock = lwip_socket(address.sin_family, SOCK_STREAM, 0);
             
             if(mysock >= 0) {
-                DTXT("ipstack_t::connect(): mysock >= 0\n");
+                //DTXT("ipstack_t::connect(): mysock >= 0\n");
                 
                 rc = lwip_connect(mysock, (struct sockaddr*)&address, sizeof(address));
                 
                 if(rc != 0) {
-                    DTXT("ipstack_t::connect(): connect failed\n");                
+                    //DTXT("ipstack_t::connect(): connect failed\n");                
                     disconnect();
                 }
             }
             else {
-                DTXT("ipstack_t::connect(): mysock < 0\n");                
+                //DTXT("ipstack_t::connect(): mysock < 0\n");                
             }
         }
 
-        DTXT("ipstack_t::connect(): end; rc = %d\n", rc);
+        //DTXT("ipstack_t::connect(): end; rc = %d\n", rc);
         
         return rc;
     }
@@ -211,7 +211,7 @@ protected:
         //if (errno != EINTR && errno != EAGAIN && errno != EINPROGRESS && errno != EWOULDBLOCK)
         if(error != EAGAIN) {
             if(/*strcmp(aString, "shutdown") != 0 ||*/ (error != ENOTCONN && error != ECONNRESET)) {
-                DTXT("ipstack_t::Socket_error(): error '%s' in %s for socket %d; error = %d, errno = %d\r\n", strerror(errno), aString, mysock, error, errno);
+                //DTXT("ipstack_t::Socket_error(): error '%s' in %s for socket %d; error = %d, errno = %d\r\n", strerror(errno), aString, mysock, error, errno);
             }
         }
         //else {

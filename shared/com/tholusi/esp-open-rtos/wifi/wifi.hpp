@@ -142,8 +142,7 @@ protected:
 #endif
 #if defined(WITH_SMARTWEB)
         wifi_smartweb,
-        //wifi_smartlink_scan_in_progress,
-        //wifi_smartlink_in_progress,
+        wifi_smartweb_in_progress,
         wifi_smartweb_done,
         wifi_smartweb_fail,
 #endif
@@ -246,6 +245,10 @@ private:
      * @return 
      */
     state_t do_wifi_smartweb();
+    
+    state_t smartweb_start_server(int port);
+    state_t smartweb_run_server();
+    state_t smartweb_stop_server();
     /**
      * 
      * @param port
@@ -352,6 +355,9 @@ private:
 #endif
     
 #if defined(WITH_SMARTWEB)
+    int   m_Sd;
+    int   m_Sc;
+    char* m_Buffer;
     char* m_P;
     char* m_Pp;
     int   m_I;

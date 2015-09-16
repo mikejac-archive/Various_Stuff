@@ -29,6 +29,7 @@
 #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
 #include <com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp>
 #include <stdio.h>
+#include <assert.h>
 
 using namespace esp_open_rtos::mqtt;
 
@@ -88,6 +89,8 @@ int fabric_t::fabricStatusMessage(fabric_status_t fabric_status, int seconds, ch
 
     DTXT("fabric_t::statusMessage(): topic = %s, strlen = %d\n", topic, strlen(topic));
 
+    assert(strlen(topic) < MAX_TOPIC_SIZE);
+    
     switch(fabric_status) {
         case fabric_online:
             sprintf(message, "\"d\":{\"_type\":\"system_status\",\"status\":\"online\",\"uptime\":%d}", seconds);
@@ -107,6 +110,8 @@ int fabric_t::fabricStatusMessage(fabric_status_t fabric_status, int seconds, ch
     }
     
     DTXT("fabric_t::statusMessage(): message = %s, strlen = %d\n", message, strlen(message));
+
+    assert(strlen(message) < MAX_PAYLOAD_SIZE);
     
     return ret;
 }
@@ -132,6 +137,8 @@ int fabric_t::fabricOnrampTopic(const char* service_id, const char* feed_id, cha
     strcat(topic, feed_id);
 
     DTXT("fabric_t::message(): topic = %s, strlen = %d\n", topic, strlen(topic));
+
+    assert(strlen(topic) < MAX_TOPIC_SIZE);
     
     return ret;    
 }
@@ -163,6 +170,8 @@ int fabric_t::fabricOfframpTopic(const char* service_id, const char* feed_id, ch
     strcat(topic, feed_id);
 
     DTXT("fabric_t::message(): topic = %s, strlen = %d\n", topic, strlen(topic));
+
+    assert(strlen(topic) < MAX_TOPIC_SIZE);
     
     return ret;    
 }
@@ -171,28 +180,24 @@ int fabric_t::fabricOfframpTopic(const char* service_id, const char* feed_id, ch
  * @param md
  * @return 
  */
-int fabric_t::fabricTokenBegin(const MQTT::MessageData* md)
+int fabric_t::fabricTokenBegin(const MQTTString* topicName)
 {
-    m_Md = (MQTT::MessageData*) md;
+    m_TopicName = (MQTTString*) topicName;
     
-    if(m_Md == 0) {
-        DTXT("fabric_t::fabricTokenBegin(): m_Md == 0\n");
+    if(m_TopicName == 0) {
+        DTXT("fabric_t::fabricTokenBegin(): m_TopicName == 0\n");
         return -1;
     }
-    else if(m_Md->topicName.lenstring.len <= 0) {
-        // I think this happens when one TCP packet contains more than one message ...
+    else if(m_TopicName->lenstring.len <= 0) {
         DTXT("fabric_t::fabricTokenBegin(): len  <= 0\n");
-        m_Md = 0;
+        m_TopicName = 0;
         return -1;
     }
     
-    m_P     = md->topicName.lenstring.data;
-    m_Pp    = md->topicName.lenstring.data;
+    m_P     = m_TopicName->lenstring.data;
+    m_Pp    = m_TopicName->lenstring.data;
     m_Words = 0;
     m_I     = 0;
-    
-    //DTXT("fabric_t::fabricTokenBegin(): data = %s\n", m_Md->topicName.lenstring.data);
-    //DTXT("fabric_t::fabricTokenBegin(): len = %d\n", m_Md->topicName.lenstring.len);
     
     return 0;
 }
@@ -204,12 +209,12 @@ int fabric_t::fabricTokenBegin(const MQTT::MessageData* md)
  */
 int fabric_t::fabricTokenNext(char** subtopic, int& index)
 {
-    if(m_Md == 0) {
-        //DTXT("fabric_t::fabricTokenNext(): m_Md == 0\n");
+    if(m_TopicName == 0) {
+        //DTXT("fabric_t::fabricTokenNext(): m_TopicName == 0\n");
         return -1;
     }
     
-    while(m_I < m_Md->topicName.lenstring.len) {
+    while(m_I < m_TopicName->lenstring.len) {
         if(*m_P == '/') {
             *m_P = '\0';
 
@@ -245,7 +250,7 @@ int fabric_t::fabricTokenNext(char** subtopic, int& index)
         index     = m_Words;
         
         // no more in this topic-string
-        m_Md = 0;
+        m_TopicName = 0;
         
         return 0;
     }
@@ -261,7 +266,7 @@ int fabric_t::fabricTokenNext(char** subtopic, int& index)
 int fabric_t::fabricTokenReset()
 {
     // no more in this topic-string
-    m_Md = 0;
+    m_TopicName = 0;
 
     return 0;
 }
