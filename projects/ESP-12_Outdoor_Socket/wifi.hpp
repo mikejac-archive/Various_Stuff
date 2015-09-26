@@ -22,8 +22,8 @@
 #ifndef WIFI_HPP
 #define	WIFI_HPP
 
-#define WIFI_SSID   "InternetX"
-#define WIFI_PASS   "Lucas#03"
+#define WIFI_SSID   "SSID"
+#define WIFI_PASS   "Password"
 
 #endif	/* WIFI_HPP */
 
