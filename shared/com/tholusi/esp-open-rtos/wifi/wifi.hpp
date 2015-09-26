@@ -29,11 +29,18 @@
 #ifndef ESP_OPEN_RTOS_WIFI_HPP
 #define	ESP_OPEN_RTOS_WIFI_HPP
 
-#include <com/tholusi/esp-open-rtos/thread/task.hpp>
-#include <com/tholusi/esp-open-rtos/timer/countdown.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/thread/task.hpp>
+    #include <com/tholusi/esp-open-rtos/timer/countdown.hpp>
+#else
+    #include <thread/task.hpp>
+    #include <timer/countdown.hpp>
+#endif
 #include <stdlib.h>
 
 #include "espressif/esp_common.h"
+
+#define WIFI_AP_NAME    "ESP_0001"
 
 namespace esp_open_rtos {
 namespace wifi {
@@ -72,12 +79,12 @@ public:
      * @return 
      */
     int init(mode_t mode, const char* ssid = NULL, const char* password = NULL);
-//#elif defined(WITH_SMARTWEB)
+#elif defined(WITH_SMARTWEB)
     /**
      * 
      * @return 
      */
-    //int init();
+    int init();
 #else
     /**
      * 
@@ -142,6 +149,7 @@ protected:
 #endif
 #if defined(WITH_SMARTWEB)
         wifi_smartweb,
+        wifi_smartweb_run,
         wifi_smartweb_in_progress,
         wifi_smartweb_done,
         wifi_smartweb_fail,

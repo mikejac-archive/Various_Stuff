@@ -22,7 +22,11 @@
 #ifndef IO_HPP
 #define	IO_HPP
 
-#include <com/tholusi/esp-open-rtos/io/gpio.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/io/gpio.hpp>
+#else
+    #include <io/gpio.hpp>
+#endif
 
 #define DTXT(...)   printf(__VA_ARGS__)
 
@@ -51,22 +55,22 @@ public:
         
         switch(gpio_num) {
             case 0:     return false;
-            case 1:     return true;
+            case 1:     return false;       // true;
             case 2:     return true;        // blue LED on ESP-12E
             case 3:     return false;
-            case 4:     return true;
-            case 5:     return true;
+            case 4:     return true;        // To U2
+            case 5:     return true;        // To U3
             case 6:     return false;
             case 7:     return false;
             case 8:     return false;
             case 9:     return false;
             case 10:    return false;
             case 11:    return false;
-            case 12:    return true;
-            case 13:    return true;
-            case 14:    return true;
+            case 12:    return true;        // From VO1
+            case 13:    return true;        // From VO2
+            case 14:    return false;       // true;
             case 15:    return false;       // must be connected to GND in order for the ESP-12E to work
-            case 16:    return true;
+            case 16:    return false;       // true;
             default:    return false;
         }
     }

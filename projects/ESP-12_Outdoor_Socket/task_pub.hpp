@@ -22,7 +22,11 @@
 #ifndef TASK_PUB_HPP
 #define	TASK_PUB_HPP
 
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp>
+#else
+    #include <mqtt/mqtt_bluemix.hpp>
+#endif
 
 #include "task_mqtt.hpp"
 #include "io.hpp"

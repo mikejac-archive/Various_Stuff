@@ -41,7 +41,8 @@
 #endif
 #endif
 
-#if defined(MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3)
+//#if defined(MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_3)
+#ifdef __MACH__
 #include <IOKit/serial/ioss.h>
 #endif
 
@@ -298,7 +299,8 @@ Serial::SerialImpl::reconfigurePort ()
   default:
     custom_baud = true;
     // OS X support
-#if defined(MAC_OS_X_VERSION_10_4) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_4)
+//#if defined(MAC_OS_X_VERSION_10_4) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_4)
+#ifdef __MACH__
     // Starting with Tiger, the IOSSIOSPEED ioctl can be used to set arbitrary baud rates
     // other than those specified by POSIX. The driver for the underlying serial hardware
     // ultimately determines which baud rates can be used. This ioctl sets both the input

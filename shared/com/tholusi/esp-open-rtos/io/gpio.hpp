@@ -34,7 +34,7 @@ const int MAX_GPIO = 16;
 
 #define GPIO_initializer_GPIO_INPUT                 { GPIO_INPUT,             0, 0 }
 #define GPIO_initializer_GPIO_OUTPUT                { GPIO_OUTPUT,            0, 0 }
-#define GPIO_initializer_GPIO_OUTPUT_OPEN_DRAIN     { GPIO_OUTPUT_OPEN_DRAIN, 0, 0 }
+#define GPIO_initializer_GPIO_OUTPUT_OPEN_DRAIN     { GPIO_OUT_OPEN_DRAIN,    0, 0 }
 #define GPIO_initializer_GPIO_INPUT_PULLUP          { GPIO_INPUT_PULLUP,      0, 0 }
 
 typedef struct {
@@ -58,12 +58,19 @@ public:
     gpio_t(gpio_project_t& gpio_project)
     {
         m_Gpio_project = &gpio_project;
-        
+    }
+    /**
+     * 
+     * @return 
+     */
+    int init(void){
         for(int i = 0; i < MAX_GPIO + 1; ++i) {
             if(m_Gpio_project->pinIsValid(i) == true) {
                 gpio_enable(i, m_Gpio_project->m_GpioStat[i].gpio_direction);
             }
         }
+
+        return 0;
     }
     /**
      * 
@@ -73,7 +80,7 @@ public:
      */
     int enable(uint8_t gpio_num, gpio_direction_t direction)
     {
-        if(m_Gpio_project->pinIsValid(gpio_num) == 0) {
+        if(m_Gpio_project->pinIsValid(gpio_num) == true) {
             m_Gpio_project->m_GpioStat[gpio_num].gpio_direction = direction;
             
             gpio_enable(gpio_num, direction);
@@ -91,7 +98,7 @@ public:
      */
     int disable(uint8_t gpio_num)
     {
-        if(m_Gpio_project->pinIsValid(gpio_num) == 0) {
+        if(m_Gpio_project->pinIsValid(gpio_num) == true) {
             m_Gpio_project->m_GpioStat[gpio_num].gpio_direction = (gpio_direction_t) 0xFF;
             
             gpio_disable(gpio_num);
@@ -141,8 +148,6 @@ public:
         else {
             return -1;
         }
-        
-        return 0;
     }
     /**
      * 
@@ -162,6 +167,41 @@ public:
         }
         
         return 0;
+    }
+    /**
+     * 
+     * @param gpio_num
+     * @return 
+     */
+    int prev_val(uint8_t gpio_num, int& val, unsigned long& millis)
+    {
+        if(m_Gpio_project->pinIsValid(gpio_num) == true) {
+            val    = m_Gpio_project->m_GpioStat[gpio_num].val;
+            millis = m_Gpio_project->m_GpioStat[gpio_num].millis;
+            
+            return 0;
+        }
+        else {
+            return -1;
+        }
+    }
+    /**
+     * 
+     * @param gpio_num
+     * @param val
+     * @return 
+     */
+    int save_val(uint8_t gpio_num, int val)
+    {
+        if(m_Gpio_project->pinIsValid(gpio_num) == true) {
+            m_Gpio_project->m_GpioStat[gpio_num].val    = val;
+            m_Gpio_project->m_GpioStat[gpio_num].millis = millis();
+            
+            return 0;
+        }
+        else {
+            return -1;
+        }
     }
     
 protected:

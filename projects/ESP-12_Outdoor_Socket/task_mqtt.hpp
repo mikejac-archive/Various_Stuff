@@ -22,8 +22,13 @@
 #ifndef TASK_MQTT_HPP
 #define	TASK_MQTT_HPP
 
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp>
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp>
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp>
+#else
+    #include <mqtt/mqtt_client.hpp>
+    #include <mqtt/mqtt_fabric.hpp>
+#endif
 
 /******************************************************************************************************************
  * MyMqtt

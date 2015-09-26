@@ -22,8 +22,14 @@
 #ifndef COM_THOLUSI_ESP_OPEN_RTOS_MQTT_BLUEMIX_HPP
 #define	COM_THOLUSI_ESP_OPEN_RTOS_MQTT_BLUEMIX_HPP
 
-#include <com/realtimelogic/json/esp_open_rtos/JEncoder.h>
-#include <com/realtimelogic/json/esp_open_rtos/JVal.h>
+#if defined(REMOTE_BUILD)
+    #include <com/realtimelogic/json/esp_open_rtos/JEncoder.h>
+    #include <com/realtimelogic/json/esp_open_rtos/JVal.h>
+#else
+    #include <json/JEncoder.h>
+    #include <json/JVal.h>
+#endif
+
 #include <stdint.h>
 #include <string.h>
 
@@ -116,7 +122,7 @@ public:
      * @param value
      * @return 
      */
-    int bmixGetInt(const char* name, int32_t& value);
+    //int bmixGetInt(const char* name, int32_t& value);
     /**
      * 
      * @param name

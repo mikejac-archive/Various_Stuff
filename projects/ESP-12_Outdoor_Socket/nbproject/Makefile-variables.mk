@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU_ESP_Open_SDK-Linux-x86/package
 CND_PACKAGE_NAME_Debug=esp8266freertostest1.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU_ESP_Open_SDK-Linux-x86/package/esp8266freertostest1.tar
 # Release configuration
-CND_PLATFORM_Release=GNU_ESP_Open_SDK_RTOS-Linux-x86
-CND_ARTIFACT_DIR_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-Linux-x86
+CND_PLATFORM_Release=GNU_ESP_Open_SDK_RTOS-MacOSX
+CND_ARTIFACT_DIR_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-MacOSX
 CND_ARTIFACT_NAME_Release=ESP-12_Outdoor_Socket
-CND_ARTIFACT_PATH_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-Linux-x86/ESP-12_Outdoor_Socket
-CND_PACKAGE_DIR_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-Linux-x86/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-MacOSX/ESP-12_Outdoor_Socket
+CND_PACKAGE_DIR_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-MacOSX/package
 CND_PACKAGE_NAME_Release=esp-12outdoorsocket.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-Linux-x86/package/esp-12outdoorsocket.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU_ESP_Open_SDK_RTOS-MacOSX/package/esp-12outdoorsocket.tar
 #
 # include compiler specific variables
 #

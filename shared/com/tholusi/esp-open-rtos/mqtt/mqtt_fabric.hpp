@@ -22,7 +22,12 @@
 #ifndef COM_THOLUSI_ESP_OPEN_RTOS_MQTT_FABRIC_HPP
 #define	COM_THOLUSI_ESP_OPEN_RTOS_MQTT_FABRIC_HPP
 
-#include <org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h>
+#if defined(REMOTE_BUILD)
+    #include <org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h>
+#else
+    #include <paho-mqtt/MQTTClient/src/MQTTClient.h>
+#endif
+
 #include <stdint.h>
 #include <string.h>
 

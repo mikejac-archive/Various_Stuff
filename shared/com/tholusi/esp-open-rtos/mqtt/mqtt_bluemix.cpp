@@ -26,8 +26,14 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_bluemix.hpp>
+#else
+    #include <cplusplus/cplusplus.hpp>
+    #include <mqtt/mqtt_bluemix.hpp>
+#endif
+
 #include <stdio.h>
 
 using namespace esp_open_rtos::mqtt;
@@ -325,7 +331,7 @@ int bluemix_t::bmixGetString(const char* name, const char** value)
  * @param value
  * @return 
  */
-int bluemix_t::bmixGetInt(const char* name, int32_t& value)
+/*int bluemix_t::bmixGetInt(const char* name, int32_t& value)
 {
     JVal* jv_dd = bmixFind(name);
     
@@ -345,7 +351,7 @@ int bluemix_t::bmixGetInt(const char* name, int32_t& value)
         // not found
         return -1;
     }
-}
+}*/
 /**
  * 
  * @param name

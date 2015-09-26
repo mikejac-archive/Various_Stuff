@@ -29,16 +29,29 @@
 #ifndef ESP_OPEN_RTOS_MQTT_CLIENT_HPP
 #define	ESP_OPEN_RTOS_MQTT_CLIENT_HPP
 
+// #define MQTT_WITH_LWT
 // #define MQTT_WITH_USERNAME_PASSWORD
 
-#include <org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h>
-#include <com/tholusi/esp-open-rtos/ip/ipstack.hpp>
-#include "com/tholusi/esp-open-rtos/timer/countdown.hpp"
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_config.hpp>
-#include <com/tholusi/esp-open-rtos/thread/task.hpp>
-#include <com/tholusi/esp-open-rtos/thread/mutex.hpp>
-#include <com/tholusi/esp-open-rtos/thread/queue.hpp>
-#include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
+#if defined(REMOTE_BUILD)
+    #include <org/eclipse/paho/mqtt/MQTTClient/src/MQTTClient.h>
+    #include <com/tholusi/esp-open-rtos/net/ipstack.hpp>
+    #include <com/tholusi/esp-open-rtos/timer/countdown.hpp>
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_config.hpp>
+    #include <com/tholusi/esp-open-rtos/thread/task.hpp>
+    #include <com/tholusi/esp-open-rtos/thread/mutex.hpp>
+    #include <com/tholusi/esp-open-rtos/thread/queue.hpp>
+    #include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
+#else
+    #include <paho-mqtt/MQTTClient/src/MQTTClient.h>
+    #include <net/ipstack.hpp>
+    #include <timer/countdown.hpp>
+    #include <mqtt/mqtt_config.hpp>
+    #include <thread/task.hpp>
+    #include <thread/mutex.hpp>
+    #include <thread/queue.hpp>
+    #include <wifi/wifi.hpp>
+#endif
+
 #include <stdlib.h>
 #include <assert.h>
 

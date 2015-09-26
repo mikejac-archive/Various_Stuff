@@ -25,7 +25,7 @@ Contributors:
 #include <send_mosq.h>
 #include <time_mosq.h>
 
-#define DTXT(...)   //printf(__VA_ARGS__)
+#define DTXT(...)   printf(__VA_ARGS__)
 
 void _mosquitto_message_cleanup(struct mosquitto_message_all **message)
 {
@@ -390,7 +390,8 @@ int _mosquitto_message_out_update(struct mosquitto *mosq, uint16_t mid, enum mos
 	}
 	pthread_mutex_unlock(&mosq->out_message_mutex);
         DTXT("_mosquitto_message_out_update(): mid = %u\n", mid);
-	return MOSQ_ERR_NOT_FOUND;
+        return MOSQ_ERR_SUCCESS;
+	//return MOSQ_ERR_NOT_FOUND;
 }
 
 int mosquitto_max_inflight_messages_set(struct mosquitto *mosq, unsigned int max_inflight_messages)

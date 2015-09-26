@@ -26,8 +26,13 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp>
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_client.hpp>
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#else
+    #include <mqtt/mqtt_client.hpp>
+    #include <cplusplus/cplusplus.hpp>
+#endif
 
 #include "espressif/esp_common.h"
 #include "espressif/sdk_private.h"
@@ -115,7 +120,7 @@ int mqtt_client_t::publish(const char* topic, const char* payload, int payload_l
         rc = -1;
     }
     else if(m_State != ready) {
-        DTXT("mqtt_client_t::publish(): warning; m_State != ready\n");
+        //DTXT("mqtt_client_t::publish(): warning; m_State != ready\n");
         rc = -2;
     }
     else {

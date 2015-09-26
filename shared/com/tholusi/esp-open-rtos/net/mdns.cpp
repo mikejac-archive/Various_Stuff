@@ -26,8 +26,13 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/ip/mdns.hpp>
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/net/mdns.hpp>
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#else
+    #include <net/mdns.hpp>
+    #include <cplusplus/cplusplus.hpp>
+#endif
 
 using namespace esp_open_rtos::ip;
 
@@ -38,21 +43,21 @@ using namespace esp_open_rtos::ip;
  *
  */
 
-static unsigned int put8(uint8_t* data, int8_t val)
+/*static unsigned int put8(uint8_t* data, int8_t val)
 {
     *data = val;
     
     return sizeof(int8_t);
-}
+}*/
 
-static unsigned int put16(uint8_t* data, int16_t val)
+/*static unsigned int put16(uint8_t* data, int16_t val)
 {
     uint16_t* p = (uint16_t*)data;
     
     *p = val;
     
     return sizeof(int16_t);
-}
+}*/
 
 int mdns_t::init()
 {

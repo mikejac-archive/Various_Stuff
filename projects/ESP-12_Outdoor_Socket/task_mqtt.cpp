@@ -26,8 +26,14 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
-#include <com/tholusi/esp-open-rtos/date_time/system_time.h>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+    #include <com/tholusi/esp-open-rtos/date_time/system_time.h>
+#else
+    #include <cplusplus/cplusplus.hpp>
+    #include <date_time/system_time.h>
+#endif
+
 #include <stdio.h>
 
 #include "task_mqtt.hpp"
@@ -100,7 +106,7 @@ void MyMqtt::on_connect()
         // publish the fact that we're alive
         fabricStatusMessage(esp_open_rtos::mqtt::fabric_t::fabric_online, esp_uptime(0), topic, msg);
         
-        //publish(topic, msg, MQTT::QOS0, true);
+        publish(topic, msg, MQTT::QOS0, true);
         
         delete[] msg;
         delete[] topic;
@@ -137,6 +143,7 @@ void MyMqtt::on_connect()
     
     subscribe("fabric/e03fe8f6-ad55-455f-9039-2a9fd7d9eec5/$feeds/$offramp/actor_id/actor_platform_id/task_id/chronos/time/seconds");
     
+    // mosquitto_pub -m "{\"d\":{\"_type\":\"set_output\",\"val\":1}}" -t "fabric/e03fe8f6-ad55-455f-9039-2a9fd7d9eec5/\$feeds/\$offramp/actor_id/actor_platform_id/task_id/set/output/1"
     subscribe("fabric/+/$feeds/$offramp/actor_id/actor_platform_id/task_id/+/+/+");
     
     DTXT("MyMqtt::on_connect(): end\n");

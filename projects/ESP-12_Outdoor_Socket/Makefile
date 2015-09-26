@@ -64,17 +64,53 @@
 #
 # NOCDDL
 
+#
+# sudo hdiutil mount ~/Documents/case-sensitive.dmg
+#
 
 # Environment 
 MKDIR=mkdir
 CP=cp
 CCADMIN=CCadmin
 
-XTENSA_BASE    = /opt/esp-open-sdk/xtensa-lx106-elf
+ifeq ($(OS),Windows_NT)
+#    CCFLAGS += -D WIN32
+#    ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+#        CCFLAGS += -D AMD64
+#    endif
+#    ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+#        CCFLAGS += -D IA32
+#    endif
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        XTENSA_BASE = /opt/esp-open-sdk/xtensa-lx106-elf
+        ROOT        = /opt/esp-open-rtos
+        ESPTOOL     = /opt/esptool/esptool.py
+        ESPPORT     = /dev/ttyUSB0
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        XTENSA_BASE = /Volumes/case-sensitive/esp-open-sdk/xtensa-lx106-elf
+        ROOT        = /Volumes/case-sensitive/esp-open-rtos
+        ESPTOOL     = /Volumes/case-sensitive/esp-open-sdk/xtensa-lx106-elf/bin/esptool.py
+        ESPPORT     = /dev/tty.wchusbserial1410
+    endif
+#    UNAME_P := $(shell uname -p)
+#    ifeq ($(UNAME_P),x86_64)
+#        CCFLAGS += -D AMD64
+#    endif
+#    ifneq ($(filter %86,$(UNAME_P)),)
+#        CCFLAGS += -D IA32
+#    endif
+#    ifneq ($(filter arm%,$(UNAME_P)),)
+#        CCFLAGS += -D ARM
+#    endif
+endif
+
+
 XTENSA_BIN     = ${XTENSA_BASE}/bin
 SIZE           = ${XTENSA_BIN}/xtensa-lx106-elf-size
 
-ROOT           = /opt/esp-open-rtos
 PROGRAM_DIR    = ${ROOT}/examples/simple_cplusplus
 BUILD_DIR      = ${PROGRAM_DIR}/build
 LD_SCRIPT1     = ${BUILD_DIR}/ld-16/eagle.app.v6.ld
@@ -84,10 +120,7 @@ ENTRY_SYMBOL   = call_user_start
 LIB_GROUP      = ${XTENSA_BASE}/xtensa-lx106-elf/sysroot/usr/lib/libhal.a ${XTENSA_BASE}/lib/gcc/xtensa-lx106-elf/4.8.2/libgcc.a ${ROOT}/libc/xtensa-lx106-elf/lib/libc.a -lmain -lnet80211 -lphy -lpp -lwpa ${BUILD_DIR}/core.a ${BUILD_DIR}/freertos.a ${BUILD_DIR}/lwip.a ${BUILD_DIR}/axtls.a
 
 # esptool defaults
-ESPTOOL        = /opt/esptool/esptool.py
 ESPBAUD        = 230400
-#ESPBAUD        = 115200
-ESPPORT        = /dev/ttyUSB0
 
 # we create two different files for uploading into the flash
 FW_1           = 0x00000

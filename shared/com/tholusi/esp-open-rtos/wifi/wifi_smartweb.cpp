@@ -30,6 +30,7 @@
 
 #include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
 #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#include <com/github/esp-open-rtos/dhcpserver/dhcpserver.h>
 #include <string.h>
 
 #include "lwip/err.h"
@@ -71,71 +72,6 @@ const int BACKLOG     = 1;
 
 
 
-
-
-
-#define WIFI_AP_NAME    "ESP_0001"
-
-/*enum {
-    EVENT_STAMODE_CONNECTED = 0,
-    EVENT_STAMODE_DISCONNECTED,
-    EVENT_STAMODE_AUTHMODE_CHANGE,
-    EVENT_STAMODE_GOT_IP,
-    EVENT_SOFTAPMODE_STACONNECTED,
-    EVENT_SOFTAPMODE_STADISCONNECTED,
-    EVENT_MAX
-};
-typedef struct {
-        uint8_t ssid[32];
-        uint8_t ssid_len;
-        uint8_t bssid[6];
-        uint8_t channel;
-} Event_StaMode_Connected_t;
-
-typedef struct {
-        uint8_t ssid[32];
-        uint8_t ssid_len;
-        uint8_t bssid[6];
-        uint8_t reason;
-} Event_StaMode_Disconnected_t;
-
-typedef struct {
-        uint8_t old_mode;
-        uint8_t new_mode;
-} Event_StaMode_AuthMode_Change_t;
-
-typedef struct {
-        struct ip_addr ip;
-        struct ip_addr mask;
-        struct ip_addr gw;
-} Event_StaMode_Got_IP_t;
-
-typedef struct {
-        uint8_t mac[6];
-        uint8_t aid;
-} Event_SoftAPMode_StaConnected_t;
-
-typedef struct {
-        uint8_t mac[6];
-        uint8_t aid;
-} Event_SoftAPMode_StaDisconnected_t;
-
-typedef union {
-        Event_StaMode_Connected_t                       connected;
-        Event_StaMode_Disconnected_t            disconnected;
-        Event_StaMode_AuthMode_Change_t         auth_change;
-        Event_StaMode_Got_IP_t                          got_ip;
-        Event_SoftAPMode_StaConnected_t         sta_connected;
-        Event_SoftAPMode_StaDisconnected_t      sta_disconnected;
-} Event_Info_u;
-typedef struct _esp_event {
-    uint32_t event;
-    Event_Info_u event_info;
-} System_Event_t;
-
-typedef void (* wifi_event_handler_cb_t)(System_Event_t *event);
-
-void sdk_wifi_set_event_handler_cb(wifi_event_handler_cb_t cb);*/
 
 /*static char* m_P;
 static char* m_Pp;
@@ -207,64 +143,60 @@ wifi_t::state_t wifi_t::do_wifi_smartweb()
     
     state_t state;
     
-    sdk_wifi_set_opmode(SOFTAP_MODE);
-    //sdk_wifi_softap_dhcps_stop();
-
-    struct sdk_softap_config apconfig;
+    //sdk_wifi_set_opmode(SOFTAP_MODE);
     
-    if(sdk_wifi_softap_get_config(&apconfig)) {
-        DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_get_config() success\n");
+    //struct ip_info ap_ip;
+    //IP4_ADDR(&ap_ip.ip,      172, 16,  0, 1);
+    //IP4_ADDR(&ap_ip.gw,      0,   0,   0, 0);
+    //IP4_ADDR(&ap_ip.netmask, 255, 255, 0, 0);
+    //sdk_wifi_set_ip_info(1, &ap_ip);
+
+    //struct sdk_softap_config ap_config;
+    
+    //if(sdk_wifi_softap_get_config(&ap_config)) {
+    //    DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_get_config() success\n");
         
-        memset(apconfig.ssid,     0, sizeof(apconfig.ssid));
-        memset(apconfig.password, 0, sizeof(apconfig.password));
+        //memset(ap_config.ssid,     0, sizeof(ap_config.ssid));
+        //memset(ap_config.password, 0, sizeof(ap_config.password));
 
-        strcpy((char*)apconfig.ssid, WIFI_AP_NAME);
+        //strcpy((char*)ap_config.ssid, WIFI_AP_NAME);
 
-        apconfig.authmode       = AUTH_OPEN;
-        apconfig.ssid_hidden    = 0;
-        apconfig.max_connection = 4;
-        apconfig.channel        = 7;
-
-        if(!sdk_wifi_softap_set_config(&apconfig)) {
-            DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_set_config() failed\n");
-            state = wifi_smartweb_fail;
-        }
-        else {
-            DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_set_config() success\n");
-            state = wifi_smartweb_done;;
-        }
-    }
-    else {
-        DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_get_config() failed\n");
-        state = wifi_smartweb_fail;
-    }
-    
-    //sdk_wifi_set_event_handler_cb(0);
-    /*wifi_set_event_handler_cb(wifi_event_cb);
-
-     LOCAL struct ip_info info;
-     IP4_ADDR(&info.ip, 192, 168, 22, 1);
-     IP4_ADDR(&info.gw, 192, 168, 22, 1);
-     IP4_ADDR(&info.netmask, 255, 255, 255, 0);
-     wifi_set_ip_info(SOFTAP_IF, &info);
-
-     struct dhcps_lease dhcp_lease;
-     IP4_ADDR(&dhcp_lease.start_ip, 192, 168, 22, 2);
-     IP4_ADDR(&dhcp_lease.end_ip, 192, 168, 22, 5);
-     wifi_softap_set_dhcps_lease(&dhcp_lease);
-
-     wifi_softap_dhcps_start();
-     ets_uart_printf("SOFTAP Status:%d\r\n",wifi_softap_dhcps_status());*/
+        //ap_config.ssid_len        = strlen(WIFI_AP_NAME);
+        //ap_config.authmode        = AUTH_OPEN;
+        //ap_config.ssid_hidden     = 0;
+        //ap_config.max_connection  = 4;
+        //ap_config.channel         = 7;
+        //ap_config.beacon_interval = 100;
+        
+        //if(!sdk_wifi_softap_set_config(&ap_config)) {
+        //    DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_set_config() failed\n");
+        //    state = wifi_smartweb_fail;
+        //}
+        //else {
+        //    DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_set_config() success\n");
+            
+            ip_addr_t first_client_ip;
+            IP4_ADDR(&first_client_ip, 172, 16, 0, 2);
+            dhcpserver_start(&first_client_ip, 4);
+            
+            state = wifi_smartweb_run;
+        //}
+    //}
+    //else {
+    //    DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_get_config() failed\n");
+    //    state = wifi_smartweb_fail;
+    //}
     
     DTXT("wifi_t::do_wifi_smartweb(): end\n");
     
     return state;
 }
+
 wifi_t::state_t wifi_t::smartweb_start_server(int port)
 {
     DTXT("wifi_t::smartweb_start_server(): begin\n");
 
-    m_Sc     = -1;
+    /*m_Sc     = -1;
     m_Sd     = -1;
     
     m_Buffer = (char*) malloc(BUFFER_SIZE);
@@ -319,7 +251,7 @@ wifi_t::state_t wifi_t::smartweb_start_server(int port)
         free(m_Buffer);
         lwip_close(m_Sd);
     	return wifi_smartweb_fail;
-    }
+    }*/
     
     DTXT("wifi_t::smartweb_start_server(): end\n");
     
@@ -331,9 +263,9 @@ wifi_t::state_t wifi_t::smartweb_run_server()
 {
     state_t state = wifi_smartweb_in_progress;
     
-    DTXT("wifi_t::smartweb_run_server(): begin\n");
+    //DTXT("wifi_t::smartweb_run_server(): begin\n");
 
-    fd_set readset;
+    /*fd_set readset;
 
     FD_ZERO(&readset); 
     FD_SET(m_Sd, &readset);
@@ -384,9 +316,9 @@ wifi_t::state_t wifi_t::smartweb_run_server()
         
         lwip_close(m_Sc);
         m_Sc = -1;
-    }    
+    }*/
     
-    DTXT("wifi_t::smartweb_run_server(): end\n");
+    //DTXT("wifi_t::smartweb_run_server(): end\n");
     
     return state;
 }

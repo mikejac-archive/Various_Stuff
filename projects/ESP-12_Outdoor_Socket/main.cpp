@@ -19,12 +19,18 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
-#include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
-#include <com/tholusi/esp-open-rtos/date_time/system_time.h>
-
 #include "espressif/esp_common.h"
 #include "espressif/sdk_private.h"
+
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+    #include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
+    #include <com/tholusi/esp-open-rtos/date_time/system_time.h>
+#else
+    #include <cplusplus/cplusplus.hpp>
+    #include <wifi/wifi.hpp>
+    #include <date_time/system_time.h>
+#endif
 
 #include <string.h>
 
@@ -134,7 +140,7 @@ MyGpio_t                                                gpio(gpio_proj);
 extern "C" void user_init(void)
 {
     sdk_uart_div_modify(0, UART_CLK_FREQ / 115200);
-    
+
     // give the UART some time to settle
     sdk_os_delay_us(500);
     
@@ -143,16 +149,36 @@ extern "C" void user_init(void)
     printf("START ESP-12 Outdoor Socket\n");
     printf("*****\n");
     printf("SDK version : %s\n\n", sdk_system_get_sdk_version());
+
+#if defined(WITH_SMARTWEB)
+    for(int i = 0; i < 10000; i++) {
+        sdk_os_delay_us(1000);
+    }
+#endif
+    
+    uint32_t spi_id = sdk_spi_flash_get_id();
+    printf("Flash ID: %04X\n", spi_id);
+    
+    while(FIELD2VAL(UART_STATUS_TXFIFO_COUNT, UART(0).STATUS) != 0) {}
     
     // get our 1 second clock running
     esp_start_system_time();
 
-    if(mqtt_pub.m_Mqtt_payload.init(5) != 0) {
+    if(gpio.init() != 0) {
+        DTXT("main(): gpio.init() != 0\n");
+    }
+    else if(mqtt_pub.m_Mqtt_payload.init(5) != 0) {
         DTXT("main(): mqtt_pub.m_Mqtt_payload.init(4) != 0\n");
     }
+#if defined(WITH_SMARTWEB)
+    if(wifi_global.init() != 0) {
+        DTXT("main(): wifi_global.init() != 0\n");
+    }
+#else
     if(wifi_global.init(WIFI_SSID, WIFI_PASS) != 0) {
         DTXT("main(): wifi_global.init(WIFI_SSID, WIFI_PASS) != 0\n");
     }
+#endif
     else if(wifi_global.task_create("wifi") != 0) {
         DTXT("main(): wifi_global.task_create(wifi) != 0\n");
     }

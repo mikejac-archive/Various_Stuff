@@ -151,7 +151,7 @@ int create_recv_sock(uint32_t addr) {
 	//}
 
 	// add membership to receiving socket
-	struct ip_mreq mreq;
+	/*struct ip_mreq mreq;
 	memset(&mreq, 0, sizeof(struct ip_mreq));
 	//mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 	mreq.imr_interface.s_addr = addr;
@@ -168,7 +168,7 @@ int create_recv_sock(uint32_t addr) {
 		DTXT("create_recv_sock(): setsockopt(IP_MULTICAST_LOOP)\n");
                 lwip_close(sd);
 		return r;
-	}
+	}*/
 
 
 #ifdef IP_PKTINFO

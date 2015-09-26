@@ -26,9 +26,16 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
-#include <com/tholusi/esp-open-rtos/date_time/system_time.h>
-#include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+    #include <com/tholusi/esp-open-rtos/date_time/system_time.h>
+    #include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
+#else
+    #include <cplusplus/cplusplus.hpp>
+    #include <date_time/system_time.h>
+    #include <wifi/wifi.hpp>
+#endif
+
 #include <stdio.h>
 
 #include "task_pub.hpp"
@@ -67,10 +74,11 @@ int MqttPub::init(MyMqtt& mqtt_client)
 void MqttPub::task()
 {
     DTXT("MqttPub::task(): start\n");
+    
+    char* topic                = new char[m_Client->maxTopicSize()];
+    char* output_changed_topic = new char[m_Client->maxTopicSize()];
 
-    char* topic = new char[m_Client->maxTopicSize()];
-
-    if(topic == 0) {
+    if(topic == 0 || output_changed_topic == 0) {
         DTXT("MqttPub::task(): error; could not allocate memeory for topic\n");
         return;
     }
@@ -79,6 +87,7 @@ void MqttPub::task()
 
     // create (static) topic
     fabricOnrampTopic("uptime", "seconds", topic);
+    fabricOnrampTopic("read", "output", output_changed_topic);
 
     m_PubCountdown.countdown(1);
     m_LedCountdown.countdown_ms(200);
@@ -105,23 +114,93 @@ void MqttPub::task()
         }
         
         /******************************************************************************************************************
+         * check if any of the outputs has changed
+         *
+         */
+        int           curr_val;
+        int           prev_val;
+        unsigned long prev_millis;
+        
+        //
+        // U2
+        //
+        curr_val = gpio.read(GPIO_U2);
+        gpio.prev_val(GPIO_U2, prev_val, prev_millis);
+        
+        if(curr_val != prev_val) {
+            // create payload in IBM Bluemix JSON format
+            if(bmixEncoderBegin() == 0) {
+                bmixAddString("_type", "read_output");
+                bmixAddInt(   "port",  1);
+                bmixAddInt(   "val",   curr_val);
+                bmixAddLong(  "clock", esp_time(0));                
+                
+                char* d = bmixEncoderEnd();
+                
+                if(d != 0) {
+                    m_Client->publish(output_changed_topic, d);
+                    //DTXT("MqttPub::task(): d = %s\n", d);
+                }
+                else {
+                    DTXT("MqttPub::task(): d == 0\n");
+                }
+            }
+            else {
+                DTXT("MqttPub::task(): bmixEncoderBegin() != 0\n");                
+            }
+            
+            gpio.save_val(GPIO_U2, curr_val);
+        }
+        
+        //
+        // U3
+        //
+        curr_val = gpio.read(GPIO_U3);
+        gpio.prev_val(GPIO_U3, prev_val, prev_millis);
+        
+        if(curr_val != prev_val) {
+            // create payload in IBM Bluemix JSON format
+            if(bmixEncoderBegin() == 0) {
+                bmixAddString("_type", "read_output");
+                bmixAddInt(   "port",  2);
+                bmixAddInt(   "val",   curr_val);
+                bmixAddLong(  "clock", esp_time(0));
+                
+                char* d = bmixEncoderEnd();
+                
+                if(d != 0) {
+                    m_Client->publish(output_changed_topic, d);
+                    //DTXT("MqttPub::task(): d = %s\n", d);
+                }
+                else {
+                    DTXT("MqttPub::task(): d == 0\n");
+                }
+            }
+            else {
+                DTXT("MqttPub::task(): bmixEncoderBegin() != 0\n");                
+            }
+            
+            gpio.save_val(GPIO_U3, curr_val);
+        }
+        
+        /******************************************************************************************************************
          * publish data if it's time
          *
          */
-        if(m_PubCountdown.expired()) {
+        /*if(m_PubCountdown.expired()) {
             //DTXT("MqttPub::task(): countdown expired\n");
 
             // create payload in IBM Bluemix JSON format
             if(bmixEncoderBegin() == 0) {
-                bmixAddString("_type",   "seconds");
-                bmixAddLong(  "seconds", esp_uptime(0));
-                bmixAddLong(  "clock",   esp_time(0));
+                bmixAddString("_type",  "seconds");
+                bmixAddLong(  "uptime", esp_uptime(0));
+                bmixAddLong(  "clock",  esp_time(0));
                 
                 char* d = bmixEncoderEnd();
                 
                 if(d != 0) {
                     m_Client->publish(topic, d);
-                    DTXT("MqttPub::task(): d = %s\n", d);
+                    //DTXT("MqttPub::task(): d = %s\n", d);
                 }
                 else {
                     DTXT("MqttPub::task(): d == 0\n");
@@ -132,7 +211,7 @@ void MqttPub::task()
             }
             
             m_PubCountdown.countdown(1);
-        }
+        }*/
 
         /******************************************************************************************************************
          * receive data from MQTT task, if any
@@ -178,6 +257,7 @@ void MqttPub::task()
                                 }
                             }
                             else if(strcmp(subtopic, "set") == 0) {
+                                //DTXT("MqttPub::task(): set; out_detect = %d\n", out_detect);
                                 if(out_detect == 0) {
                                     ++out_detect;
                                 }
@@ -191,6 +271,7 @@ void MqttPub::task()
                                 }
                             }
                             else if(strcmp(subtopic, "output") == 0) {
+                                //DTXT("MqttPub::task(): output; out_detect = %d\n", out_detect);
                                 if(out_detect == 1) {
                                     ++out_detect;
                                 }
@@ -198,18 +279,22 @@ void MqttPub::task()
                             break;
 
                         case 9:
+                            //DTXT("MqttPub::task(): idx = 9; subtopic = '%s'\n", subtopic);
+                            
                             if(strcmp(subtopic, "seconds") == 0) {
                                 if(chronos_detect == 3) {
                                     ++chronos_detect;
                                 }
                             }
                             else if(strcmp(subtopic, "1") == 0) {
+                                //DTXT("MqttPub::task(): 1; out_detect = %d\n", out_detect);
                                 if(out_detect == 2) {
                                     ++out_detect;
                                     gpio_port = GPIO_U2;
                                 }
                             }
                             else if(strcmp(subtopic, "2") == 0) {
+                                //DTXT("MqttPub::task(): 2; out_detect = %d\n", out_detect);
                                 if(out_detect == 2) {
                                     ++out_detect;
                                     gpio_port = GPIO_U3;
@@ -275,6 +360,13 @@ void MqttPub::do_gpio_out(int port, void* payload, size_t payloadlen)
     /******************************************************************************************************************
      * extract data from 'd' object
      *
+     * {
+     *   "d" : {
+     *     "_type" : "set_output",
+     *     "val"   : 1
+     *   }
+     * }
+     * 
      */
     if(bmixDecoderBegin(payload, payloadlen) != 0) {
         const char* _type;

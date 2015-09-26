@@ -26,9 +26,15 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
-//#include <com/tholusi/esp-open-rtos/ip/mdns.hpp>
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/wifi/wifi.hpp>
+    //#include <com/tholusi/esp-open-rtos/ip/mdns.hpp>
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+#else
+    #include <wifi/wifi.hpp>
+    #include <cplusplus/cplusplus.hpp>
+#endif
+
 #include <string.h>
 
 using namespace esp_open_rtos::wifi;
@@ -84,14 +90,14 @@ int wifi_t::init(wifi_t::mode_t mode, const char* ssid, const char* password)
     
     return 0;    
 }
-//#elif defined(WITH_SMARTWEB)
+#elif defined(WITH_SMARTWEB)
 /**
  * 
  * @return 
  */
-/*int wifi_t::init()
+int wifi_t::init()
 {
-    m_State         = wifi_smartweb;
+    //m_State         = wifi_smartweb;
     m_WifiErrors    = 0;
     
     memset(&m_IpConfig, 0, sizeof(struct ip_info));
@@ -101,9 +107,45 @@ int wifi_t::init(wifi_t::mode_t mode, const char* ssid, const char* password)
     // get our MAC address and convert it to text for future use
     sdk_wifi_get_macaddr(STATION_IF, hwaddr);
     sprintf(m_Mac, MACSTR, MAC2STR(hwaddr));
+    
+    sdk_wifi_set_opmode(SOFTAP_MODE);
+    
+    struct ip_info ap_ip;
+    IP4_ADDR(&ap_ip.ip,      172, 16,  0, 1);
+    IP4_ADDR(&ap_ip.gw,      0,   0,   0, 0);
+    IP4_ADDR(&ap_ip.netmask, 255, 255, 0, 0);
+    sdk_wifi_set_ip_info(1, &ap_ip);
 
+    struct sdk_softap_config ap_config;
+    
+    memset(ap_config.ssid,     0, sizeof(ap_config.ssid));
+    memset(ap_config.password, 0, sizeof(ap_config.password));
+
+    strcpy((char*)ap_config.ssid, WIFI_AP_NAME);
+
+    ap_config.ssid_len        = strlen(WIFI_AP_NAME);
+    ap_config.authmode        = AUTH_OPEN;
+    ap_config.ssid_hidden     = 0;
+    ap_config.max_connection  = 3;
+    ap_config.channel         = 7;
+    ap_config.beacon_interval = 100;
+
+    if(!sdk_wifi_softap_set_config(&ap_config)) {
+        DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_set_config() failed\n");
+        m_State = wifi_smartweb_fail;
+    }
+    else {
+        DTXT("wifi_t::do_wifi_smartweb(): sdk_wifi_softap_set_config() success\n");
+
+        //ip_addr_t first_client_ip;
+        //IP4_ADDR(&first_client_ip, 172, 16, 0, 2);
+        //dhcpserver_start(&first_client_ip, 4);
+
+        m_State = wifi_smartweb;
+    }
+    
     return 0;
-}*/
+}
 #else
 /**
  * 
@@ -216,9 +258,14 @@ void wifi_t::task()
                 
 #if defined(WITH_SMARTWEB)
             case wifi_smartweb:
-                //m_State = do_wifi_smartweb();
+                m_State = do_wifi_smartweb();
                 break;
 
+            case wifi_smartweb_run:
+                //m_State = ready;
+                m_State = smartweb_start_server(80);
+                break;
+                
             case wifi_smartweb_in_progress:
                 m_State = smartweb_run_server();
                 break;
@@ -251,7 +298,7 @@ void wifi_t::task()
             case ready:
                 DTXT("wifi_t::task(): ready\n");
 #if defined(WITH_SMARTWEB)
-                m_State = smartweb_start_server(80);
+                //m_State = smartweb_start_server(80);
 #else
                 sleep(60000);
                 m_State = do_wifi_check();
@@ -324,7 +371,6 @@ wifi_t::state_t wifi_t::do_wifi_connect()
         
         sdk_wifi_station_set_config(&m_Config);
         sdk_wifi_station_connect();
-        //sdk_wifi_station_set_auto_connect(1);
 
         state = wifi_connect_in_progress;
     }
@@ -351,12 +397,6 @@ wifi_t::state_t wifi_t::do_wifi_connect_done()
     
     DTXT("wifi_t::do_wifi_connect_done(): ip = %d.%d.%d.%d\n", ip4_addr1(&m_IpConfig.ip), ip4_addr2(&m_IpConfig.ip), ip4_addr3(&m_IpConfig.ip), ip4_addr4(&m_IpConfig.ip));
 
-    //ip::mdns_t mdns;
-    //mdns.init();
-    
-    //mdns.open();
-    //mdns.close();
-    
     DTXT("wifi_t::do_wifi_connect_done(): end\n");
     
     return ready;

@@ -26,19 +26,13 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/date_time/system_time.h>
-//#include "espressif/esp_common.h"
-//#include "espressif/sdk_private.h"
-//#include "FreeRTOS.h"
-//#include "task.h"
-//#include "esp8266.h"
-//nclude "common_macros.h"
-
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/date_time/system_time.h>
+#else
+    #include <date_time/system_time.h>
+#endif
 
 #include "esp/timer.h"
-
-
-const int freq_frc1 = 1;        // 1Hz = once per second
 
 static volatile esp_time_t _system_time;
 static volatile esp_time_t _uptime;
@@ -60,36 +54,21 @@ int esp_start_system_time()
     _system_time  = 0;
     _uptime       = 0;
     
-    TIMER(0).CTRL = VAL2FIELD(TIMER_CTRL_CLKDIV, TIMER_CLKDIV_256) | TIMER_CTRL_RELOAD;
-    TIMER(0).LOAD = 0x200000;
-    
-    DPORT.INT_ENABLE |= DPORT_INT_ENABLE_TIMER0;
+    // stop timer and mask it's interrupt as a precaution
+    timer_set_interrupts(FRC1, false);
+    timer_set_run(FRC1, false);
+
+    // set up ISR
     _xt_isr_attach(INUM_TIMER_FRC1, frc1_interrupt_handler);
     _xt_isr_unmask(1<<INUM_TIMER_FRC1);
 
-    TIMER(0).CTRL |= TIMER_CTRL_RUN;
-    
-    
-    
-    
-    
-    // stop timer and mask it's interrupt as a precaution
-    /*timer_set_interrupts(TIMER_FRC1, false);
-    timer_set_run(TIMER_FRC1, false);
-    
-    _system_time = 0;
-    _uptime      = 0;
-    
-    // set up ISR
-    _xt_isr_attach(INUM_TIMER_FRC1, frc1_interrupt_handler);
-    
     // configure timer frequency
-    timer_set_frequency(TIMER_FRC1, freq_frc1);
-    
-    // unmask interrupt and start timer
-    timer_set_interrupts(TIMER_FRC1, true);
-    timer_set_run(TIMER_FRC1, true);*/
+    timer_set_frequency(FRC1, 1);       // 1Hz = once per second
 
+    // unmask interrupt and start timer
+    timer_set_interrupts(FRC1, true);
+    timer_set_run(FRC1, true);
+    
     return 0;
 }
 /**

@@ -26,8 +26,14 @@
  * 
  */
 
-#include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
-#include <com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp>
+#if defined(REMOTE_BUILD)
+    #include <com/tholusi/esp-open-rtos/cplusplus/cplusplus.hpp>
+    #include <com/tholusi/esp-open-rtos/mqtt/mqtt_fabric.hpp>
+#else
+    #include <cplusplus/cplusplus.hpp>
+    #include <mqtt/mqtt_fabric.hpp>
+#endif
+
 #include <stdio.h>
 #include <assert.h>
 
